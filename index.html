@@ -1,0 +1,1229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e9e4d8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>SUNDAYYY NAAAA I LOVEE YOUUU + + +</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="images/alaia-photo.jpg">
+<style>
+:root{
+ --paper:#f6f1e7;--paper2:#efe9dc;--green:#7e8965;--ink:#2b2a25;
+ --muted:#777267;--line:#d6cfbf;--shadow:rgba(38,36,30,.2);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#d9d4c7;color:var(--ink)}
+body{font-family:Georgia,"Times New Roman",serif;overflow:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.24;
+ background:radial-gradient(circle at 15% 20%,rgba(80,70,55,.12) 0 1px,transparent 2px),
+ radial-gradient(circle at 70% 80%,rgba(80,70,55,.1) 0 1px,transparent 2px);
+ background-size:19px 23px,29px 31px;mix-blend-mode:multiply}
+.app{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:center;padding:14px}
+.book-wrap{width:min(960px,97vw);height:min(720px,88dvh);position:relative;perspective:1900px}
+.book{position:absolute;inset:0;border:9px solid var(--green);background:var(--paper);
+ box-shadow:0 18px 55px var(--shadow),0 2px 0 rgba(255,255,255,.8) inset;overflow:hidden}
+.page{position:absolute;inset:0;padding:38px 55px 80px;background:var(--paper);
+ transform-origin:left center;transform-style:preserve-3d;transition:transform .82s cubic-bezier(.2,.7,.2,1),box-shadow .82s;
+ backface-visibility:hidden;overflow:auto}
+.page.flipped{transform:rotateY(-180deg);box-shadow:12px 0 25px rgba(0,0,0,.18)}
+.page:after{content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(90deg,rgba(0,0,0,.035),transparent 12%,transparent 88%,rgba(0,0,0,.025))}
+.page-inner{position:relative;z-index:2;max-width:790px;margin:auto}
+.page-number{position:absolute;right:0;top:0;font:10px Arial,sans-serif;letter-spacing:.12em;color:#8a8477}
+.page p{font-size:clamp(14px,1.48vw,18px);line-height:1.65;margin:0 0 1.02em}
+.page p.short{font-size:clamp(18px,2vw,24px);line-height:1.4;margin:1.1em 0}
+.page p.hashtag{font:600 12px/1.5 Arial,sans-serif;letter-spacing:.04em;color:#6f795a}
+.portrait{float:right;width:135px;height:135px;object-fit:cover;margin:0 0 22px 25px;
+ transform:rotate(1.5deg);border:7px solid #f8f5ed;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.cover{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100%}
+.cover h1{font-size:clamp(32px,5vw,62px);line-height:1.08;margin:20px 0}
+.cutouts{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;max-width:700px}
+.letter{min-width:50px;height:60px;padding:0 9px;display:flex;align-items:center;justify-content:center;
+ font:bold 43px/1 Georgia,serif;box-shadow:0 2px 4px rgba(0,0,0,.12);transform:rotate(var(--r));background:#c8b99c}
+.letter:nth-child(3n+1){background:#d6c2b7}.letter:nth-child(3n+2){background:#8390a2;color:#fff}
+.letter:nth-child(4n){background:#9a6c68;color:#fff}
+.subtle{font:11px Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#777267}
+.center{text-align:center}
+.controls{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);z-index:100;
+ display:flex;align-items:center;gap:6px;padding:8px 9px;border:1px solid rgba(80,75,65,.18);
+ border-radius:999px;background:rgba(246,241,231,.92);backdrop-filter:blur(9px);box-shadow:0 6px 24px rgba(0,0,0,.13)}
+button,.select{border:0;border-radius:999px;padding:9px 12px;background:#707a5b;color:#fff;
+ font:600 11px Arial,sans-serif;cursor:pointer}
+button.secondary,.select{background:#d8d1c2;color:#3c3a34}
+button:disabled{opacity:.4}
+.count{font:600 10px Arial,sans-serif;color:#5d594f;min-width:60px;text-align:center}
+.music-panel{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:120;
+ width:min(920px,94vw);display:flex;gap:8px;align-items:center;justify-content:center;
+ padding:8px;border-radius:18px;background:rgba(246,241,231,.93);border:1px solid rgba(80,75,65,.16);
+ box-shadow:0 5px 20px rgba(0,0,0,.1);backdrop-filter:blur(9px)}
+.track{display:flex;align-items:center;gap:7px;flex:1;min-width:0}
+.track img{width:43px;height:43px;object-fit:cover;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.14)}
+.track-info{min-width:0;text-align:left}
+.track-title{font:600 11px/1.2 Arial,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-artist{font:10px/1.2 Arial,sans-serif;color:#777267;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-label{font:600 10px Arial,sans-serif;padding:7px 9px;background:#e0d9cb;border-radius:999px;cursor:pointer;white-space:nowrap}
+.file-label input{display:none}
+.audio-controls{display:flex;align-items:center;gap:6px}
+.audio-controls button{padding:7px 9px}
+.progress{width:95px;accent-color:#707a5b}
+.hint{position:fixed;left:50%;bottom:58px;transform:translateX(-50%);z-index:99;
+ font:10px Arial,sans-serif;color:#69645b;background:rgba(246,241,231,.72);padding:5px 9px;border-radius:16px}
+
+/* Opening cover: a physical-looking handmade front cover that opens once. */
+.opening-cover{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;
+ background:radial-gradient(ellipse at center,#e9e4d8 0%,#d6d0c2 100%);transition:opacity .65s ease,visibility .65s ease}
+.opening-cover.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.cover-book{width:min(430px,78vw);height:min(620px,78vh);position:relative;perspective:1800px;filter:drop-shadow(0 22px 32px rgba(0,0,0,.22))}
+.cover-face{position:absolute;inset:0;background:var(--paper);border:9px solid var(--green);transform-origin:left center;
+ display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;overflow:hidden;
+ transition:transform 1.15s cubic-bezier(.2,.75,.18,1),box-shadow 1.15s;backface-visibility:hidden}
+.cover-book.open .cover-face{transform:rotateY(-128deg);box-shadow:16px 0 30px rgba(0,0,0,.2)}
+.cover-face:before{content:"";position:absolute;inset:0;opacity:.25;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(80,70,55,.035) 0 1px,transparent 1px 4px)}
+.cover-spine{position:absolute;left:0;top:0;bottom:0;width:9px;background:#6e7958;z-index:2}
+.open-title{position:relative;z-index:3;font-size:clamp(30px,6vw,55px);line-height:1.08;margin:18px 0}
+.open-sub{position:relative;z-index:3;font:600 11px Arial,sans-serif;letter-spacing:.17em;text-transform:uppercase;color:#777267}
+.open-hint{position:absolute;bottom:28px;z-index:3;font:11px Arial,sans-serif;color:#6d675c;background:rgba(245,241,232,.82);padding:8px 12px;border-radius:999px}
+.open-letter{min-width:46px;height:54px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;font:bold 38px Georgia,serif;
+ margin:4px;box-shadow:0 2px 4px rgba(0,0,0,.12);transform:rotate(var(--r));background:#c8b99c}
+.open-letter:nth-child(3n+1){background:#d6c2b7}.open-letter:nth-child(3n+2){background:#8390a2;color:#fff}.open-letter:nth-child(4n){background:#9a6c68;color:#fff}
+.opening-actions{position:absolute;bottom:9%;display:flex;gap:8px;z-index:301}
+.open-btn{border:0;border-radius:999px;padding:11px 16px;background:#707a5b;color:white;font:600 11px Arial,sans-serif;cursor:pointer}
+@media(max-width:760px){
+ .cover-book{height:min(600px,78vh);width:min(360px,82vw)}
+ .cover-face{border-width:6px}
+ .open-letter{min-width:34px;height:43px;font-size:29px}
+}
+
+@media(max-width:760px){
+ .book-wrap{height:80dvh}.book{border-width:6px}.page{padding:32px 25px 90px}
+ .page p{font-size:15px;line-height:1.6}.portrait{width:105px;height:105px;margin-left:16px}
+ .music-panel{top:5px;gap:5px;overflow-x:auto;justify-content:flex-start}
+ .track{min-width:205px}.track img{width:36px;height:36px}.progress{display:none}
+ .file-label{display:none}.controls{bottom:6px}.hint{display:none}
+ .letter{min-width:36px;height:45px;font-size:31px;padding:0 6px}
+}
+</style>
+</head>
+<body>
+
+<div class="opening-cover" id="openingCover" aria-label="Opening cover">
+  <div class="cover-book" id="coverBook">
+    <div class="cover-face" id="coverFace">
+      <div class="cover-spine"></div>
+      <div class="open-sub">a little something made with love</div>
+      <div style="margin-top:28px;max-width:90%;text-align:center">
+        <span class="open-letter" style="--r:-2deg">M</span>
+        <span class="open-letter" style="--r:2deg">A</span>
+        <span class="open-letter" style="--r:-1deg">D</span>
+        <span class="open-letter" style="--r:3deg">E</span>
+      </div>
+      <div style="margin-top:8px;max-width:90%;text-align:center">
+        <span class="open-letter" style="--r:2deg">W</span>
+        <span class="open-letter" style="--r:-3deg">I</span>
+        <span class="open-letter" style="--r:1deg">T</span>
+        <span class="open-letter" style="--r:-2deg">H</span>
+      </div>
+      <div style="margin-top:26px;max-width:90%;text-align:center">
+        <span class="open-letter" style="--r:-2deg">L</span>
+        <span class="open-letter" style="--r:2deg">O</span>
+        <span class="open-letter" style="--r:-3deg">V</span>
+        <span class="open-letter" style="--r:1deg">E</span>
+      </div>
+      <div class="open-title">For Alaia</div>
+      <div class="open-sub">Kent • Sunday</div>
+      <div class="open-hint">tap the cover to open</div>
+    </div>
+  </div>
+</div>
+
+<div class="music-panel" id="musicPanel">
+  <div class="track" data-track="0">
+    <img src="images/never.jpg" alt="">
+    <div class="track-info"><div class="track-title">Never Leave Your Side</div><div class="track-artist">Saw Tooth Wave</div></div>
+    <label class="file-label">choose file<input type="file" accept="audio/*"></label>
+    <div class="audio-controls"><button class="play">▶</button></div>
+    <audio preload="metadata"></audio>
+  </div>
+  <div class="track" data-track="1">
+    <img src="images/spring.jpg" alt="">
+    <div class="track-info"><div class="track-title">Spring Into Summer</div><div class="track-artist">Lizzy McAlpine</div></div>
+    <label class="file-label">choose file<input type="file" accept="audio/*"></label>
+    <div class="audio-controls"><button class="play">▶</button></div>
+    <audio preload="metadata"></audio>
+  </div>
+  <div class="track" data-track="2">
+    <img src="images/champagne.jpg" alt="">
+    <div class="track-info"><div class="track-title">Champagne Coast</div><div class="track-artist">Blood Orange</div></div>
+    <label class="file-label">choose file<input type="file" accept="audio/*"></label>
+    <div class="audio-controls"><button class="play">▶</button></div>
+    <audio preload="metadata"></audio>
+  </div>
+</div>
+
+<div class="app">
+  <div class="book-wrap">
+    <div class="book" id="book">
+      <section class="page" data-page="0">
+        <div class="cover">
+          <div class="subtle">sunday • aug 16, 2026 • 12:33 A:M</div>
+          <div class="cutouts" style="margin-top:28px">
+            <span class="letter" style="--r:-2deg">S</span><span class="letter" style="--r:2deg">U</span>
+            <span class="letter" style="--r:-1deg">N</span><span class="letter" style="--r:3deg">D</span>
+            <span class="letter" style="--r:-2deg">A</span><span class="letter" style="--r:1deg">Y</span>
+          </div>
+          <h1>SUNDAYYY NAAAA<br>I LOVEE YOUUU + + +</h1>
+          <div class="subtle">made with a little love by kent</div>
+          <p style="margin-top:30px;font-size:16px">#panibagonggabipanibagonggawaniermino<br>#iloveyoualaiabykentbermino</p>
+        </div>
+      </section>
+
+<section class="page" data-page="1">
+  <div class="page-inner">
+    <div class="page-number">01 / 32</div>
+    <img class="portrait" src="images/alaia-photo.jpg" alt="Photo from the original letter">
+    <p>SUNDAYYY NAAAAAAA I LOVEE YOUUU + + +</p>
+<p class="hashtag">#panibagonggabipanibagonggawaniermino</p>
+<p class="hashtag">#iloveyoualaiabykentbermino</p>
+<p>Time of submission: 12:33A:M</p>
+<p>Date of submission: SUN, AUG 16,2026</p>
+<p>Reason of submission: crush kita</p>
+<p class="short">Hi, hello, hi, hello, hi, hello, hi ehez.</p>
+<p class="short">Not sure if it’s the best time to send this.</p>
+<p>I wanted to write this but I also wanted for you to read it na</p>
+<p class="hashtag">#mayhardcopynamaysoftcopypa</p>
+<p>Okay, first of all, I genuinely don&#x27;t know how this is going to turn out because apparently I decided that writing one letter wasn&#x27;t enough and now I&#x27;m here writing another one that is probably going to be way too long (sinusulat ko to everytime you fall asleep HAHAHA kakatapos ko lang neto nung kahapon ehez). HAHAHA. I don&#x27;t even know if you&#x27;re going to read all of this in one sitting or if you&#x27;re going to get halfway through and say &quot;kent ano ba yan&quot; and then come back to it later. Either way, if you actually read everything, thank you agad. I know this is a lot, but I think there are some things that I haven&#x27;t properly said yet, and I don&#x27;t want to keep trying to squeeze everything I feel into a few sentences when there is honestly so much I want to tell you.</p>
+<p>I&#x27;ve been thinking a lot about everything that happened between us.</p>
+<p class="short">And I mean everything.</p>
+  </div>
+</section>
+
+<section class="page" data-page="2">
+  <div class="page-inner">
+    <div class="page-number">02 / 32</div>
+    
+    <p>From when we were just friends and didn&#x27;t really think anything of it, to all the random conversations, the stupid jokes, the little things we started noticing about each other, the times we opened up, the first time we actually talked about our feelings, the confusion, the nervousness, the teasing, the &quot;BE CAUTIOUS&quot; moments, the &quot;honest honest&quot; nonsense, the random hashtags, and somehow eventually ending up here</p>
+<p class="short">It&#x27;s kind of funny when I think about it.</p>
+<p>Because if someone told me before all of this that you would become someone this important to me, I probably would&#x27;ve laughed.</p>
+<p class="short">Not because I wouldn&#x27;t have liked you.</p>
+<p class="short">But because I wouldn&#x27;t have expected it.</p>
+<p class="short">I think that&#x27;s what makes everything feel more genuine to me.</p>
+<p class="short">It wasn&#x27;t something I planned.</p>
+<p class="short">It wasn&#x27;t something I was looking for.</p>
+<p class="short">It wasn&#x27;t something I woke up one day and decided I wanted.</p>
+<p class="short">It just happened.</p>
+<p class="short">And somewhere along the way, you became someone I genuinely love.</p>
+<p class="short">I still think about the letter you gave me.</p>
+<p>I know I&#x27;ve already told you how much I appreciated it, and you&#x27;ve probably already heard me say it enough times, but I don&#x27;t think I&#x27;ve ever properly explained why it affected me that much.</p>
+<p class="short">It was the first letter I&#x27;ve ever received.</p>
+<p class="short">Like genuinely.</p>
+<p class="short">My first actual letter.</p>
+<p class="short">And that alone already meant something to me.</p>
+<p class="short">But then I actually read it.</p>
+<p class="short">And it was from you.</p>
+<p class="short">So obviously, wala na.</p>
+<p class="short">Walang angas.</p>
+<p class="short">You completely ruined me HAHAHA.</p>
+  </div>
+</section>
+
+<section class="page" data-page="3">
+  <div class="page-inner">
+    <div class="page-number">03 / 32</div>
+    
+    <p>I remember trying to act normal when you gave it to me, but I don&#x27;t think I was succeeding very well. I read it and I couldn&#x27;t stop smiling. I probably looked stupid, but honestly, I didn&#x27;t care.</p>
+<p>And the funniest part is that even after I finished reading it, I kept going back to it.</p>
+<p class="short">Once.</p>
+<p class="short">Twice.</p>
+<p class="short">Again.</p>
+<p class="short">Again.</p>
+<p class="short">Again.</p>
+<p class="hashtag">#swearbythatdoginme</p>
+<p class="short">I don&#x27;t even know how many times I&#x27;ve read it at this point.</p>
+<p class="short">And somehow, every time I read it, I still get that same feeling.</p>
+<p class="short">I still smile.</p>
+<p class="short">I still find myself thinking about the things you said.</p>
+<p class="short">And I think that&#x27;s because it wasn&#x27;t just a letter.</p>
+<p>It was you taking the time to put your thoughts about me into words.</p>
+<p>And there is something about that that I don&#x27;t think I&#x27;ll ever be able to fully explain.</p>
+<p class="short">You made me feel seen.</p>
+<p class="short">That&#x27;s probably the simplest way I can put it.</p>
+<p>You wrote about parts of me that I don&#x27;t necessarily notice myself. You described me in ways that made me stop and think, &quot;Ganito pala ako sa paningin niya?&quot;</p>
+<p class="short">And honestly, that felt really warm.</p>
+<p>Because sometimes we get so used to ourselves that we stop noticing the little things about who we are.</p>
+<p>Then someone else comes along and says, &quot;I noticed this about you.&quot;</p>
+<p>And suddenly you realize that maybe you are seen in ways you never realized.</p>
+<p class="short">You did that for me.</p>
+  </div>
+</section>
+
+<section class="page" data-page="4">
+  <div class="page-inner">
+    <div class="page-number">04 / 32</div>
+    
+    <p class="short">And I think that&#x27;s one of the things I admire most about you.</p>
+<p class="short">You&#x27;re genuine.</p>
+<p class="short">You notice things.</p>
+<p class="short">You care.</p>
+<p>You have this way of making people feel like what they&#x27;re saying matters.</p>
+<p>And yes, sometimes you care so much that you start overthinking everything and then end up saying &quot;idk&quot; like it&#x27;s a complete explanation HAHAHA.</p>
+<p class="short">But even that is something I appreciate.</p>
+<p class="short">Because you&#x27;re human.</p>
+<p class="short">You&#x27;re not always sure.</p>
+<p class="short">You&#x27;re not always confident.</p>
+<p class="short">You don&#x27;t always know what to say.</p>
+<p class="short">And I don&#x27;t think you need to pretend that you do.</p>
+<p class="short">I like that about you.</p>
+<p class="short">I like you as you are.</p>
+<p class="short">Not some perfect version of you.</p>
+<p class="short">Not some version that always knows what to do.</p>
+<p class="short">Just you.</p>
+<p class="short">The Alaia I know.</p>
+<p class="short">The loud Alaia.</p>
+<p class="short">The quiet Alaia.</p>
+<p class="short">The makulit Alaia.</p>
+<p class="short">The tampuhin Alaia.</p>
+<p class="short">The overthinking Alaia.</p>
+<p class="short">The happy Alaia.</p>
+  </div>
+</section>
+
+<section class="page" data-page="5">
+  <div class="page-inner">
+    <div class="page-number">05 / 32</div>
+    
+    <p class="short">The sad Alaia.</p>
+<p class="short">The nervous Alaia.</p>
+<p class="short">The confident Alaia.</p>
+<p class="short">The &quot;I know what I&#x27;m doing&quot; Alaia.</p>
+<p class="short">And the &quot;I have absolutely no idea what I&#x27;m doing&quot; Alaia.</p>
+<p class="short">I want to know all of them.</p>
+<p>Because I don&#x27;t think loving someone means only loving the parts that are easy.</p>
+<p class="short">And I don&#x27;t mean that in some dramatic way.</p>
+<p class="short">I just mean that I don&#x27;t expect you to always be okay around me.</p>
+<p class="short">If you&#x27;re happy, tell me.</p>
+<p class="short">If you&#x27;re upset, tell me if you want to.</p>
+<p class="short">If you&#x27;re confused, you don&#x27;t have to immediately figure it out.</p>
+<p>If you&#x27;re overwhelmed, you don&#x27;t have to make it sound smaller just so I won&#x27;t worry.</p>
+<p class="short">And if all you can give me is &quot;idk&quot;...</p>
+<p class="short">then okay.</p>
+<p>We&#x27;ll work with the &quot;idk.&quot;</p>
+<p class="short">HAHAHA.</p>
+<p>I think I&#x27;ve learned that sometimes people don&#x27;t need you to solve anything.</p>
+<p class="short">Sometimes they just need someone who can sit there and listen.</p>
+<p class="short">And I want to be able to do that for you.</p>
+<p class="short">Not because I think I can fix every problem you have.</p>
+<p class="short">I can&#x27;t.</p>
+<p class="short">I&#x27;m not going to pretend I can.</p>
+<p class="short">But I can listen.</p>
+  </div>
+</section>
+
+<section class="page" data-page="6">
+  <div class="page-inner">
+    <div class="page-number">06 / 32</div>
+    
+    <p class="short">I can try to understand.</p>
+<p>I can remind you that you don&#x27;t have to figure everything out at once.</p>
+<p class="short">And I can be there when you need someone to talk to.</p>
+<p class="short">That&#x27;s all.</p>
+<p class="short">No pressure.</p>
+<p class="short">No expectation.</p>
+<p class="short">Just me being there because I care.</p>
+<p>And that&#x27;s actually connected to something you&#x27;ve asked me before.</p>
+<p>Why do I like you?</p>
+<p class="short">Honestly, I don&#x27;t know how to give you the perfect answer.</p>
+<p class="short">I&#x27;ve thought about it.</p>
+<p class="short">A lot.</p>
+<p>And I could probably sit here and list a hundred things I like about you.</p>
+<p class="short">Your laugh.</p>
+<p class="short">Your voice.</p>
+<p class="short">Your humor.</p>
+<p class="short">Your stories.</p>
+<p class="short">Your kindness.</p>
+<p class="short">Your empathy.</p>
+<p class="short">Your pagiging makulit.</p>
+<p class="short">Your tampo.</p>
+<p class="short">Your random thoughts.</p>
+<p class="short">Your little reactions.</p>
+<p class="short">The way you talk.</p>
+  </div>
+</section>
+
+<section class="page" data-page="7">
+  <div class="page-inner">
+    <div class="page-number">07 / 32</div>
+    
+    <p class="short">The way you get excited.</p>
+<p class="short">The way you sometimes overthink things.</p>
+<p>The way you can turn the most normal conversation into something completely stupid.</p>
+<p class="short">The way you tell me things.</p>
+<p class="short">The way you make me laugh.</p>
+<p class="short">The way you make me feel comfortable.</p>
+<p class="short">The way I can just talk to you.</p>
+<p>But even if I listed every single one of those things, I don&#x27;t think that would fully answer the question.</p>
+<p class="short">Because those are things I like about you.</p>
+<p class="short">They&#x27;re not necessarily the reason I fell in love with you.</p>
+<p class="short">And I think that&#x27;s an important difference.</p>
+<p class="short">I like you because of those little things.</p>
+<p>But I love you because somewhere along the way, all those little things became part of a person I genuinely cared about.</p>
+<p class="short">You.</p>
+<p class="short">And that&#x27;s why whenever you ask me &quot;Why me?&quot; I get stuck.</p>
+<p class="short">Because I don&#x27;t have a scientific explanation.</p>
+<p class="short">I can&#x27;t give you some equation.</p>
+<p>I can&#x27;t say:</p>
+<p class="short">Alaia + this specific quality + this specific moment = love.</p>
+<p class="short">It doesn&#x27;t work like that.</p>
+<p class="short">I didn&#x27;t choose you from a list.</p>
+<p>I didn&#x27;t look around and decide you were the most convenient person.</p>
+<p class="short">I didn&#x27;t like you just because you were close to me.</p>
+<p class="short">I didn&#x27;t like you because I needed someone to like.</p>
+  </div>
+</section>
+
+<section class="page" data-page="8">
+  <div class="page-inner">
+    <div class="page-number">08 / 32</div>
+    
+    <p class="short">I just got to know you.</p>
+<p class="short">And then I started caring.</p>
+<p class="short">And then I started caring more.</p>
+<p>And then eventually, I realized that I wasn&#x27;t just caring about you anymore.</p>
+<p class="short">I loved you.</p>
+<p class="short">And the weirdest thing is that I don&#x27;t remember choosing that.</p>
+<p>I don&#x27;t remember having some moment where I said, &quot;Okay, I think I&#x27;ll love her now.&quot;</p>
+<p class="short">It just happened.</p>
+<p class="short">Parang second nature.</p>
+<p class="short">That&#x27;s probably the best way I can describe it.</p>
+<p class="short">I don&#x27;t consciously choose to care about you.</p>
+<p class="short">I don&#x27;t wake up every morning and decide that I have to love you.</p>
+<p class="short">I just do.</p>
+<p class="short">When you&#x27;re talking to me, I care.</p>
+<p class="short">When you&#x27;re having a bad day, I care.</p>
+<p class="short">When you&#x27;re happy, I care.</p>
+<p class="short">When you&#x27;re nervous, I care.</p>
+<p>When you&#x27;re telling me something random that probably has absolutely no importance to anyone else, I still care because it&#x27;s important to you.</p>
+<p>And that&#x27;s why taking care of you doesn&#x27;t feel like a burden to me.</p>
+<p class="short">I remember that call.</p>
+<p class="short">You told me it was unfair because I kept taking care of you.</p>
+<p class="short">And I understood why you thought that.</p>
+<p>Maybe from your perspective, it looked like I was constantly doing things for you and maybe you felt like you had to give something back.</p>
+  </div>
+</section>
+
+<section class="page" data-page="9">
+  <div class="page-inner">
+    <div class="page-number">09 / 32</div>
+    
+    <p class="short">But that&#x27;s never how I saw it.</p>
+<p class="short">I wasn&#x27;t keeping score.</p>
+<p class="short">I wasn&#x27;t counting how many times I reassured you.</p>
+<p>I wasn&#x27;t thinking about how many things I&#x27;d done and wondering when you&#x27;d return the favor.</p>
+<p class="short">I wasn&#x27;t doing any of that.</p>
+<p class="short">I was just taking care of someone I love.</p>
+<p class="short">That&#x27;s it.</p>
+<p class="short">And I remember trying to explain that to you.</p>
+<p>I was literally telling you that I do those things because I genuinely love you.</p>
+<p class="short">And then.</p>
+<p class="short">You fell asleep.</p>
+<p class="short">HAHAHAHA.</p>
+<p>You were literally listening to me explain myself and then your body decided, &quot;osige, tulog nako&quot;</p>
+<p class="short">And suddenly, silence.</p>
+<p class="short">At first I thought maybe you were just quiet.</p>
+<p class="short">Then I realized you were actually asleep.</p>
+<p class="short">And I remember just staying there for a while.</p>
+<p class="short">I could&#x27;ve ended the call.</p>
+<p class="short">I probably should&#x27;ve.</p>
+<p class="short">But I didn&#x27;t immediately want to.</p>
+<p class="short">I just sat there.</p>
+<p class="short">And honestly, I smiled.</p>
+<p class="short">You probably don&#x27;t know that.</p>
+<p class="short">You probably don&#x27;t even remember falling asleep.</p>
+  </div>
+</section>
+
+<section class="page" data-page="10">
+  <div class="page-inner">
+    <div class="page-number">10 / 32</div>
+    
+    <p class="short">But I remember.</p>
+<p>And I think the reason that moment stayed with me isn&#x27;t simply because it was cute.</p>
+<p class="short">It was because of what was happening before it.</p>
+<p class="short">You were worried that I was doing too much for you.</p>
+<p class="short">You were worried that maybe you were becoming a burden.</p>
+<p>And meanwhile, I was sitting there trying to tell you that none of it felt like a burden to me.</p>
+<p class="short">I wanted to take care of you.</p>
+<p class="short">I wanted to listen to you.</p>
+<p class="short">I wanted to reassure you.</p>
+<p class="short">Not because I was obligated to.</p>
+<p class="short">Because I wanted to.</p>
+<p>And when you fell asleep while I was still talking, there was something oddly peaceful about it.</p>
+<p class="short">You didn&#x27;t need to keep talking.</p>
+<p class="short">You didn&#x27;t need to explain anything.</p>
+<p class="short">You just fell asleep.</p>
+<p class="short">And I stayed.</p>
+<p class="short">Not because I had to.</p>
+<p class="short">Because I wanted to.</p>
+<p class="short">And I think that&#x27;s a memory I&#x27;ll keep.</p>
+<p class="short">It&#x27;s not some huge dramatic moment.</p>
+<p class="short">It&#x27;s just a little moment.</p>
+<p class="short">But sometimes those are the moments that matter most.</p>
+<p>And maybe someday I&#x27;ll tell you exactly how much that moment meant to me.</p>
+<p>Or maybe I&#x27;ll just keep it as one of those little memories I quietly carry around.</p>
+  </div>
+</section>
+
+<section class="page" data-page="11">
+  <div class="page-inner">
+    <div class="page-number">11 / 32</div>
+    
+    <p class="short">Either way, I don&#x27;t think I&#x27;ll forget it.</p>
+<p class="short">And then there&#x27;s the song.</p>
+<p class="short">&quot;Never Leave Your Side&quot; by Saw Tooth Wave.</p>
+<p class="short">I don&#x27;t know why that song has been stuck with me lately.</p>
+<p class="short">But I remember it playing when you first opened up to me.</p>
+<p>That was one of those moments where I realized that you were trusting me with something more personal.</p>
+<p>You were letting me see something beyond the version of you that everyone normally sees.</p>
+<p class="short">And I remember listening.</p>
+<p class="short">Really listening.</p>
+<p>Because I wanted you to know that you didn&#x27;t have to hide everything.</p>
+<p class="short">Then later, we started talking about our own feelings.</p>
+<p class="short">And that was another moment that I don&#x27;t think I&#x27;ll forget.</p>
+<p class="short">Because it was weird.</p>
+<p class="short">We had been friends.</p>
+<p class="short">We were comfortable.</p>
+<p class="short">We joked around.</p>
+<p class="short">We said stupid things.</p>
+<p class="short">We had our own little nonsense.</p>
+<p>And then suddenly, we were talking about feelings that neither of us could really pretend weren&#x27;t there.</p>
+<p class="short">It was fast.</p>
+<p class="short">Maybe too fast.</p>
+<p class="short">And I know that sometimes you still wonder about that.</p>
+<p class="short">Whether everything happened because of the circumstances.</p>
+<p class="short">Whether maybe it was just because we were close.</p>
+  </div>
+</section>
+
+<section class="page" data-page="12">
+  <div class="page-inner">
+    <div class="page-number">12 / 32</div>
+    
+    <p class="short">Whether maybe it was just timing.</p>
+<p class="short">And I understand why you would wonder.</p>
+<p class="short">I really do.</p>
+<p class="short">But I don&#x27;t think that&#x27;s what it was.</p>
+<p>Because if it was only circumstance, I don&#x27;t think I&#x27;d still feel this way when the circumstances change.</p>
+<p>If it was only because you were close, then I don&#x27;t think I&#x27;d care this deeply about knowing you beyond whatever was happening at the time.</p>
+<p>If it was only because you happened to be there, then I don&#x27;t think I would still be interested in all the little things that make you who you are.</p>
+<p class="short">But I am.</p>
+<p class="short">I want to know you.</p>
+<p class="short">I want to keep learning you.</p>
+<p class="short">And maybe that&#x27;s why that song stayed with me.</p>
+<p>Because when I think about that first night you opened up to me, I think about how I want you to know that you don&#x27;t have to be alone with everything you feel.</p>
+<p>And when I think about the idea of &quot;never leaving your side,&quot; I don&#x27;t mean it as some impossible promise that I&#x27;ll always know exactly what to do.</p>
+<p>I mean that I want to be someone who doesn&#x27;t immediately disappear when things get difficult.</p>
+<p class="short">If you&#x27;re overwhelmed, I want to listen.</p>
+<p>If you&#x27;re scared, I&#x27;ll try to make things feel a little less scary.</p>
+<p class="short">If you&#x27;re confused, I won&#x27;t demand an answer from you.</p>
+<p class="short">If you&#x27;re happy, I&#x27;ll be happy with you.</p>
+<p class="short">If you&#x27;re having a bad day, I&#x27;ll still be here.</p>
+<p class="short">And if you need space, I&#x27;ll respect that too.</p>
+<p class="short">Because loving someone isn&#x27;t about constantly holding onto them.</p>
+<p class="short">Sometimes loving someone means giving them room to breathe.</p>
+  </div>
+</section>
+
+<section class="page" data-page="13">
+  <div class="page-inner">
+    <div class="page-number">13 / 32</div>
+    
+    <p class="short">Sometimes it means listening instead of talking.</p>
+<p>Sometimes it means sitting quietly on a call while the other person falls asleep.</p>
+<p>Sometimes it means saying, &quot;Okay, you don&#x27;t know yet. That&#x27;s fine.&quot;</p>
+<p>And sometimes it means reminding someone that they don&#x27;t have to carry everything alone.</p>
+<p class="short">That&#x27;s what I want to give you.</p>
+<p class="short">Not perfection.</p>
+<p class="short">Not some impossible promise.</p>
+<p class="short">Just something genuine.</p>
+<p class="short">Something consistent.</p>
+<p class="short">Something you don&#x27;t have to question every five minutes.</p>
+<p>And I know you sometimes have doubts about whether I really mean what I say.</p>
+<p class="short">I understand.</p>
+<p class="short">You don&#x27;t have to believe everything immediately.</p>
+<p>I don&#x27;t want to pressure you into believing me just because I tell you that I love you.</p>
+<p class="short">I&#x27;d rather show you.</p>
+<p class="short">I&#x27;d rather let my actions speak over time.</p>
+<p class="short">Because anyone can say something.</p>
+<p class="short">Words are easy.</p>
+<p class="short">Consistency is harder.</p>
+<p class="short">So if it takes time for you to believe me, that&#x27;s okay.</p>
+<p class="short">I won&#x27;t be offended.</p>
+<p class="short">I won&#x27;t think you&#x27;re rejecting me.</p>
+<p class="short">I won&#x27;t get angry because you need time.</p>
+<p class="short">I&#x27;ll just keep being genuine.</p>
+  </div>
+</section>
+
+<section class="page" data-page="14">
+  <div class="page-inner">
+    <div class="page-number">14 / 32</div>
+    
+    <p class="short">Because I don&#x27;t want to convince you through pressure.</p>
+<p>I want you to eventually believe me because you&#x27;ve seen it yourself.</p>
+<p class="short">Through the way I treat you.</p>
+<p class="short">Through the way I listen.</p>
+<p class="short">Through the way I care.</p>
+<p class="short">Through the way I respect your boundaries.</p>
+<p class="short">Through the way I stay consistent even when you&#x27;re unsure.</p>
+<p>And I don&#x27;t want you to ever feel like you owe me something for that.</p>
+<p class="short">You don&#x27;t.</p>
+<p class="short">You don&#x27;t owe me your love because I love you.</p>
+<p class="short">You don&#x27;t owe me the same amount of effort.</p>
+<p class="short">You don&#x27;t owe me constant attention.</p>
+<p>You don&#x27;t owe me an explanation every time you don&#x27;t know what you&#x27;re feeling.</p>
+<p class="short">You don&#x27;t owe me anything.</p>
+<p class="short">I love you because I love you.</p>
+<p class="short">Not because I expect a reward.</p>
+<p class="short">Not because I&#x27;m keeping track.</p>
+<p>Not because I want you to feel guilty if you can&#x27;t give something back immediately.</p>
+<p class="short">I just love you.</p>
+<p class="short">And that&#x27;s why it doesn&#x27;t feel like a burden.</p>
+<p class="short">It feels natural.</p>
+<p class="short">It feels like something I genuinely want to give.</p>
+<p>And I think that&#x27;s what I want you to understand when you ask why I like you.</p>
+<p class="short">I don&#x27;t think I chose you.</p>
+  </div>
+</section>
+
+<section class="page" data-page="15">
+  <div class="page-inner">
+    <div class="page-number">15 / 32</div>
+    
+    <p class="short">I think I just found myself here.</p>
+<p class="short">With you.</p>
+<p class="short">And I&#x27;m glad I did.</p>
+<p class="short">I also think it&#x27;s funny how much you tease me about my old type.</p>
+<p class="short">Chinitas.</p>
+<p class="short">Mestizas.</p>
+<p class="short">HAHAHAHA.</p>
+<p class="short">You really will never let that go.</p>
+<p class="short">And honestly, I deserve it.</p>
+<p class="short">I said it.</p>
+<p class="short">You have the evidence.</p>
+<p class="short">But I think I&#x27;ve realized something.</p>
+<p>Having a type isn&#x27;t the same thing as knowing who you&#x27;re actually going to love.</p>
+<p class="short">A &quot;type&quot; is just an idea.</p>
+<p class="short">A preference.</p>
+<p class="short">Something you think sounds attractive.</p>
+<p class="short">But then you meet an actual person.</p>
+<p class="short">You get to know them.</p>
+<p class="short">You see how they think.</p>
+<p class="short">You hear them laugh.</p>
+<p class="short">You learn their little habits.</p>
+<p class="short">You see how they react when they&#x27;re nervous.</p>
+<p class="short">You see how they treat people.</p>
+<p class="short">You hear the things they don&#x27;t usually tell everyone.</p>
+  </div>
+</section>
+
+<section class="page" data-page="16">
+  <div class="page-inner">
+    <div class="page-number">16 / 32</div>
+    
+    <p class="short">And suddenly, some imaginary list doesn&#x27;t matter as much anymore.</p>
+<p class="short">Because there&#x27;s an actual person standing in front of you.</p>
+<p class="short">And for me, that person was you.</p>
+<p>I didn&#x27;t look at you and think, &quot;Well, she isn&#x27;t my type, but I guess I&#x27;ll like her.&quot;</p>
+<p class="short">No.</p>
+<p class="short">I just liked you.</p>
+<p class="short">That&#x27;s what happened.</p>
+<p class="short">And I think that&#x27;s why I can&#x27;t give you some complicated reason.</p>
+<p class="short">Because I didn&#x27;t choose you based on a checklist.</p>
+<p class="short">I didn&#x27;t choose you because you were the closest.</p>
+<p class="short">I didn&#x27;t choose you because I was lonely.</p>
+<p class="short">I didn&#x27;t choose you because I needed someone.</p>
+<p class="short">I chose nothing.</p>
+<p class="short">I just felt something.</p>
+<p class="short">And it became stronger the more I got to know you.</p>
+<p>That&#x27;s why when you ask me &quot;why me?&quot; I can give you a hundred little answers but none of them will fully explain it.</p>
+<p class="short">I can tell you I love your laugh.</p>
+<p class="short">I can tell you I love your humor.</p>
+<p class="short">I can tell you I love your kindness.</p>
+<p class="short">I can tell you I love your empathy.</p>
+<p class="short">I can tell you I love your random stories.</p>
+<p class="short">I can tell you I love your tampo.</p>
+<p class="short">I can tell you I love your pagiging makulit.</p>
+<p class="short">I can tell you I love your little &quot;idk&quot;s.</p>
+  </div>
+</section>
+
+<section class="page" data-page="17">
+  <div class="page-inner">
+    <div class="page-number">17 / 32</div>
+    
+    <p class="short">I can tell you I love the way you make me feel comfortable.</p>
+<p>But even after all of that, I think I&#x27;d still have to say:</p>
+<p class="short">I don&#x27;t know.</p>
+<p class="short">I just love you.</p>
+<p class="short">And maybe that&#x27;s okay.</p>
+<p class="short">Maybe not everything needs a perfect explanation.</p>
+<p>Maybe some things are meaningful precisely because you can&#x27;t reduce them to one reason.</p>
+<p class="short">And I think that&#x27;s how I feel about you.</p>
+<p class="short">You&#x27;re not a checklist.</p>
+<p class="short">You&#x27;re not a collection of qualities.</p>
+<p>You&#x27;re not some answer I arrived at after comparing you to everyone else.</p>
+<p class="short">You&#x27;re you.</p>
+<p class="short">And somehow, that&#x27;s enough.</p>
+<p class="short">More than enough.</p>
+<p>I think about all the little things we&#x27;ve already experienced together.</p>
+<p class="short">The stupid conversations.</p>
+<p class="short">The calls.</p>
+<p class="short">The jokes.</p>
+<p class="short">The random hashtags.</p>
+<p>The &quot;honest honest.&quot;</p>
+<p>The &quot;pants on water.&quot;</p>
+<p>The &quot;BE CAUTIOUS.&quot;</p>
+<p>The random moments where one of us says something so stupid that the other can&#x27;t stop laughing.</p>
+<p class="short">Those things might not seem important to anyone else.</p>
+  </div>
+</section>
+
+<section class="page" data-page="18">
+  <div class="page-inner">
+    <div class="page-number">18 / 32</div>
+    
+    <p class="short">But they are important to me.</p>
+<p class="short">Because they&#x27;re ours.</p>
+<p>They&#x27;re little pieces of time that only make sense because we were there.</p>
+<p class="short">And I think that&#x27;s what I want more of.</p>
+<p class="short">Not necessarily huge moments.</p>
+<p class="short">Not some dramatic movie scene.</p>
+<p>Just more ordinary moments that somehow become special because they&#x27;re with you.</p>
+<p>More conversations where we start talking about something serious and somehow end up talking about complete nonsense.</p>
+<p>More times where we laugh at things that aren&#x27;t even funny anymore.</p>
+<p>More times where we get annoyed at each other over something stupid and then end up laughing about it.</p>
+<p class="short">More times where you tell me something random.</p>
+<p class="short">More times where I get to hear your laugh.</p>
+<p class="short">More times where I get to see the different sides of you.</p>
+<p>More moments where we just exist around each other without needing to make everything significant.</p>
+<p>Because honestly, I think that&#x27;s where some of the best memories come from.</p>
+<p class="short">The ordinary ones.</p>
+<p class="short">Like that call.</p>
+<p class="short">Like the night you fell asleep while I was talking.</p>
+<p class="short">Like the song playing when you first opened up.</p>
+<p class="short">Like the first time we both finally talked about our feelings.</p>
+<p class="short">None of those moments were planned.</p>
+<p class="short">And yet they&#x27;re some of the moments I remember most.</p>
+<p class="short">That&#x27;s why I don&#x27;t want to rush everything.</p>
+<p class="short">We&#x27;re still learning from each other.</p>
+  </div>
+</section>
+
+<section class="page" data-page="19">
+  <div class="page-inner">
+    <div class="page-number">19 / 32</div>
+    
+    <p class="short">We&#x27;re still figuring things out.</p>
+<p class="short">And that&#x27;s okay.</p>
+<p class="short">I don&#x27;t need to know everything about you right now.</p>
+<p class="short">I want to learn it.</p>
+<p class="short">Slowly.</p>
+<p class="short">Naturally.</p>
+<p class="short">Through conversations.</p>
+<p class="short">Through experiences.</p>
+<p class="short">Through the random little things you tell me.</p>
+<p class="short">I want to know what makes you happy.</p>
+<p class="short">What makes you nervous.</p>
+<p class="short">What makes you laugh.</p>
+<p class="short">What makes you angry.</p>
+<p class="short">What makes you feel safe.</p>
+<p class="short">What makes you feel understood.</p>
+<p class="short">What makes you feel loved.</p>
+<p class="short">And I want you to know those things about me too.</p>
+<p>Because I don&#x27;t want this to be about me constantly telling you how much I love you while you just sit there wondering whether it&#x27;s real.</p>
+<p class="short">I want you to actually know me too.</p>
+<p class="short">I want you to see the parts of me that aren&#x27;t always confident.</p>
+<p class="short">The parts of me that overthink.</p>
+<p class="short">The parts of me that don&#x27;t know what to say.</p>
+<p class="short">The parts of me that get nervous.</p>
+<p class="short">The parts of me that care too much.</p>
+  </div>
+</section>
+
+<section class="page" data-page="20">
+  <div class="page-inner">
+    <div class="page-number">20 / 32</div>
+    
+    <p>Because if I&#x27;m asking you to let me know the real you, then I should be willing to let you know the real me too.</p>
+<p class="short">That&#x27;s what makes this genuine to me.</p>
+<p class="short">And I know things aren&#x27;t always going to be perfect.</p>
+<p class="short">We&#x27;re going to misunderstand each other sometimes.</p>
+<p class="short">We&#x27;re going to have awkward moments.</p>
+<p class="short">We&#x27;re probably going to annoy each other.</p>
+<p class="short">Let&#x27;s be honest, we already do.</p>
+<p class="short">HAHAHA.</p>
+<p>There will probably be days where one of us doesn&#x27;t know what to say.</p>
+<p class="short">There will probably be days where we&#x27;re both tired.</p>
+<p class="short">There will probably be moments where we need space.</p>
+<p>And I don&#x27;t think those things automatically make something less real.</p>
+<p class="short">I think they&#x27;re just part of getting to know another person.</p>
+<p class="short">What matters to me is how we handle those moments.</p>
+<p class="short">Whether we can communicate.</p>
+<p class="short">Whether we can listen.</p>
+<p class="short">Whether we can respect each other.</p>
+<p class="short">Whether we can still choose to be kind when things aren&#x27;t easy.</p>
+<p class="short">And I want to do that with you.</p>
+<p class="short">Not perfectly.</p>
+<p class="short">Just genuinely.</p>
+<p>Because I don&#x27;t want you to ever think that loving you means I expect you to be perfect.</p>
+<p class="short">You don&#x27;t have to be.</p>
+<p class="short">You can have bad days.</p>
+  </div>
+</section>
+
+<section class="page" data-page="21">
+  <div class="page-inner">
+    <div class="page-number">21 / 32</div>
+    
+    <p class="short">You can be moody.</p>
+<p class="short">You can overthink.</p>
+<p class="short">You can be unsure.</p>
+<p class="short">You can change your mind.</p>
+<p class="short">You can need time.</p>
+<p>You can say &quot;I don&#x27;t know.&quot;</p>
+<p class="short">You can just be human.</p>
+<p class="short">And I&#x27;ll still see you as you.</p>
+<p class="short">The same person I laughed with.</p>
+<p class="short">The same person who wrote me that first letter.</p>
+<p class="short">The same person who opened up to me.</p>
+<p>The same person who fell asleep while I was trying to explain why I care about her.</p>
+<p class="short">The same person whose laugh I miss.</p>
+<p>The same person whose tampo I somehow find endearing even when I&#x27;m the one getting suyu&#x27;d into apologizing.</p>
+<p class="short">HAHAHA.</p>
+<p class="short">The same person I love.</p>
+<p>And if I could somehow go back to the moment before all of this started, I don&#x27;t think I&#x27;d try to change anything.</p>
+<p class="short">Not the awkwardness.</p>
+<p class="short">Not the confusion.</p>
+<p class="short">Not the nervousness.</p>
+<p class="short">Not the uncertainty.</p>
+<p class="short">Because all of those things somehow led me here.</p>
+<p class="short">To you.</p>
+  </div>
+</section>
+
+<section class="page" data-page="22">
+  <div class="page-inner">
+    <div class="page-number">22 / 32</div>
+    
+    <p class="short">And I&#x27;m grateful.</p>
+<p class="short">I&#x27;m grateful I got to know you.</p>
+<p class="short">I&#x27;m grateful you trusted me.</p>
+<p class="short">I&#x27;m grateful you gave me that letter.</p>
+<p class="short">I&#x27;m grateful for every conversation.</p>
+<p class="short">I&#x27;m grateful for every laugh.</p>
+<p class="short">I&#x27;m grateful for every random thing you&#x27;ve told me.</p>
+<p class="short">I&#x27;m grateful for every time you let me help.</p>
+<p class="short">I&#x27;m grateful for every time you&#x27;ve opened up.</p>
+<p class="short">I&#x27;m grateful for every time you&#x27;ve made me laugh.</p>
+<p>I&#x27;m grateful for every little moment that probably didn&#x27;t seem important at the time.</p>
+<p>And I&#x27;m especially grateful for the fact that I get to keep learning who you are.</p>
+<p class="short">Because I don&#x27;t think I&#x27;m done admiring you.</p>
+<p class="short">I think there&#x27;s still so much more of you for me to know.</p>
+<p class="short">And I want to know it.</p>
+<p>I want to know the person you become when you&#x27;re excited about something.</p>
+<p class="short">I want to know the person you become when you&#x27;re comfortable.</p>
+<p class="short">I want to know the things you care about deeply.</p>
+<p class="short">I want to know your stupid little habits.</p>
+<p class="short">I want to know your favorite random things.</p>
+<p>I want to hear stories I&#x27;ve probably already heard but somehow still enjoy because they&#x27;re from you.</p>
+<p class="short">I want to know what you think about things.</p>
+<p class="short">I want to know what makes you feel proud.</p>
+<p class="short">I want to know what makes you nervous.</p>
+  </div>
+</section>
+
+<section class="page" data-page="23">
+  <div class="page-inner">
+    <div class="page-number">23 / 32</div>
+    
+    <p class="short">I want to know what you dream about.</p>
+<p class="short">I want to know what kind of person you want to become.</p>
+<p class="short">And I want you to know that you don&#x27;t have to rush any of that.</p>
+<p class="short">We have time to learn.</p>
+<p class="short">And maybe that&#x27;s what I want most.</p>
+<p class="short">Time.</p>
+<p class="short">Not because I&#x27;m trying to predict the future.</p>
+<p class="short">Not because I want to force anything.</p>
+<p class="short">Just because I want more moments with you.</p>
+<p class="short">More calls.</p>
+<p class="short">More conversations.</p>
+<p class="short">More laughter.</p>
+<p class="short">More stories.</p>
+<p>More &quot;idk.&quot;</p>
+<p>More &quot;honest honest.&quot;</p>
+<p>More &quot;BE CAUTIOUS.&quot;</p>
+<p class="short">More nonsense.</p>
+<p class="short">More everything.</p>
+<p class="short">And maybe that&#x27;s why I keep thinking about that song.</p>
+<p class="short">&quot;Never Leave Your Side.&quot;</p>
+<p class="short">Because lately, whenever it comes to mind, I think about you.</p>
+<p>And I think about how much I want you to know that my care for you isn&#x27;t something temporary that exists only because everything happens to be convenient right now.</p>
+<p class="short">It&#x27;s something I genuinely feel.</p>
+<p class="short">I don&#x27;t know exactly what the future will look like.</p>
+  </div>
+</section>
+
+<section class="page" data-page="24">
+  <div class="page-inner">
+    <div class="page-number">24 / 32</div>
+    
+    <p class="short">I can&#x27;t promise that I&#x27;ll always know what to say.</p>
+<p class="short">I can&#x27;t promise that everything will always be easy.</p>
+<p class="short">I can&#x27;t promise that I&#x27;ll never make mistakes.</p>
+<p class="short">But I can promise that what I feel right now is genuine.</p>
+<p>And I can promise that I will always try to treat you with the care and respect you deserve.</p>
+<p class="short">I want to be consistent.</p>
+<p class="short">Not because I&#x27;m trying to convince you.</p>
+<p class="short">But because I want to be.</p>
+<p>I want my actions to eventually make you feel more certain than any words I could write.</p>
+<p class="short">Because words are nice.</p>
+<p class="short">Letters are nice.</p>
+<p class="short">But consistency is what makes them real.</p>
+<p class="short">And I think that&#x27;s what I want to give you.</p>
+<p class="short">Not some grand performance.</p>
+<p class="short">Not some huge gesture every day.</p>
+<p class="short">Just consistency.</p>
+<p>The kind where you don&#x27;t have to wonder if I suddenly stopped caring because I had a bad day.</p>
+<p>The kind where you don&#x27;t have to feel like you need to earn my care.</p>
+<p class="short">The kind where you can trust that I mean what I say.</p>
+<p class="short">And if it takes you time to believe that, then okay.</p>
+<p class="short">Take your time.</p>
+<p class="short">I don&#x27;t want to rush you.</p>
+<p class="short">I don&#x27;t want you to feel pressured.</p>
+<p class="short">I just want you to eventually see that I&#x27;m being honest.</p>
+  </div>
+</section>
+
+<section class="page" data-page="25">
+  <div class="page-inner">
+    <div class="page-number">25 / 32</div>
+    
+    <p class="short">And if you ask me again why I love you...</p>
+<p class="short">Maybe I&#x27;ll still struggle.</p>
+<p>Maybe I&#x27;ll still say &quot;I don&#x27;t know.&quot;</p>
+<p class="short">Maybe I&#x27;ll still annoy you with the same answer.</p>
+<p class="short">But I&#x27;ll probably add everything I&#x27;ve written here.</p>
+<p class="short">I&#x27;ll tell you about your laugh.</p>
+<p class="short">Your tampo.</p>
+<p class="short">Your kindness.</p>
+<p class="short">Your humor.</p>
+<p class="short">Your empathy.</p>
+<p class="short">Your random stories.</p>
+<p class="short">Your little habits.</p>
+<p class="short">Your weirdness.</p>
+<p class="short">Your sincerity.</p>
+<p class="short">The way you make me laugh.</p>
+<p class="short">The way you make me care.</p>
+<p class="short">The way you make me want to listen.</p>
+<p class="short">The way you make me want to stay.</p>
+<p>And then I&#x27;ll probably still end with:</p>
+<p class="short">I don&#x27;t know.</p>
+<p class="short">I just love you.</p>
+<p class="short">Because that&#x27;s the truth.</p>
+<p class="short">And maybe I don&#x27;t need anything more complicated than that.</p>
+<p class="short">I love you because I love you.</p>
+  </div>
+</section>
+
+<section class="page" data-page="26">
+  <div class="page-inner">
+    <div class="page-number">26 / 32</div>
+    
+    <p class="short">I love you because I genuinely feel it.</p>
+<p class="short">I love you because caring about you doesn&#x27;t feel like work.</p>
+<p class="short">I love you because taking care of you doesn&#x27;t feel like a burden.</p>
+<p>I love you because being there for you is something I naturally want to do.</p>
+<p class="short">I love you because you&#x27;re you.</p>
+<p class="short">And maybe if you ever ask me to quantify it...</p>
+<p>I&#x27;ll just say:</p>
+<p class="short">I love you 4000.</p>
+<p class="short">HAHAHAHA.</p>
+<p class="short">Okay, that&#x27;s probably cheesy.</p>
+<p class="short">But I&#x27;m keeping it.</p>
+<p>Because honestly, if there were a number big enough to explain how much I care about you, I&#x27;d probably still find a way to say it&#x27;s not enough.</p>
+<p class="short">So I&#x27;ll just say 4000.</p>
+<p class="short">And then I&#x27;ll probably add another zero when you&#x27;re not looking.</p>
+<p>But jokes aside, I hope you know that I don&#x27;t say &quot;I love you&quot; just because it sounds nice.</p>
+<p class="short">I don&#x27;t say it because I think it&#x27;s what you&#x27;re supposed to hear.</p>
+<p class="short">I say it because it&#x27;s genuinely what I feel.</p>
+<p>And I don&#x27;t want you to ever feel like those words come with some hidden obligation.</p>
+<p class="short">They don&#x27;t.</p>
+<p class="short">They&#x27;re just words that describe something I already feel.</p>
+<p class="short">And if you don&#x27;t know what to say back sometimes, that&#x27;s okay.</p>
+<p class="short">If you don&#x27;t know how to respond, that&#x27;s okay.</p>
+<p class="short">If you just laugh because you&#x27;re embarrassed, that&#x27;s also okay.</p>
+<p class="short">I&#x27;ll probably laugh too.</p>
+  </div>
+</section>
+
+<section class="page" data-page="27">
+  <div class="page-inner">
+    <div class="page-number">27 / 32</div>
+    
+    <p class="short">Because that&#x27;s us.</p>
+<p>We don&#x27;t always know how to handle serious things without making them a little stupid.</p>
+<p class="short">And honestly, I like that.</p>
+<p>I like that we can have a serious conversation and then somehow end up laughing about something completely unrelated.</p>
+<p>I like that we can talk about feelings and then five minutes later be talking about some random nonsense.</p>
+<p class="short">I like that we don&#x27;t have to be serious all the time.</p>
+<p class="short">I like that there&#x27;s comfort in the chaos.</p>
+<p>And I like that somehow, even when things are confusing, I still feel like talking to you is something I look forward to.</p>
+<p class="short">That&#x27;s special to me.</p>
+<p class="short">You are special to me.</p>
+<p class="short">And I don&#x27;t think I want to take that for granted.</p>
+<p class="short">So if you ever wonder whether the letter you gave me mattered...</p>
+<p class="short">It did.</p>
+<p class="short">If you ever wonder whether I remember that night you opened up...</p>
+<p class="short">I do.</p>
+<p class="short">If you ever wonder whether I remember the song...</p>
+<p class="short">I do.</p>
+<p>If you ever wonder whether I remember you falling asleep while I was talking...</p>
+<p class="short">I definitely do.</p>
+<p class="short">HAHAHAHA.</p>
+<p class="short">And if you ever wonder why I take care of you...</p>
+<p class="short">Now you know.</p>
+<p class="short">Not because I have to.</p>
+  </div>
+</section>
+
+<section class="page" data-page="28">
+  <div class="page-inner">
+    <div class="page-number">28 / 32</div>
+    
+    <p class="short">Because I want to.</p>
+<p class="short">Not because I expect something.</p>
+<p class="short">Because I care.</p>
+<p class="short">Not because you&#x27;re a burden.</p>
+<p class="short">Because loving you feels natural.</p>
+<p>Not because you&#x27;re some perfect version of what I thought I wanted.</p>
+<p class="short">Because you&#x27;re you.</p>
+<p class="short">And that&#x27;s enough.</p>
+<p class="short">More than enough.</p>
+<p class="short">I think that&#x27;s what I want this letter to leave you with.</p>
+<p class="short">Not some perfect explanation.</p>
+<p class="short">Not some grand promise.</p>
+<p class="short">Just the truth.</p>
+<p class="short">I love you.</p>
+<p class="short">I genuinely love you.</p>
+<p class="short">I love you when you&#x27;re laughing.</p>
+<p class="short">I love you when you&#x27;re being makulit.</p>
+<p class="short">I love you when you&#x27;re tampuhin.</p>
+<p class="short">I love you when you&#x27;re overthinking.</p>
+<p class="short">I love you when you&#x27;re confident.</p>
+<p class="short">I love you when you&#x27;re unsure.</p>
+<p class="short">I love you when you know what you&#x27;re doing.</p>
+<p>I love you when you say &quot;idk.&quot;</p>
+<p class="short">I love you when you&#x27;re happy.</p>
+  </div>
+</section>
+
+<section class="page" data-page="29">
+  <div class="page-inner">
+    <div class="page-number">29 / 32</div>
+    
+    <p class="short">I love you when you&#x27;re tired.</p>
+<p class="short">I love you when you&#x27;re talking nonstop.</p>
+<p class="short">I love you when you&#x27;re quiet.</p>
+<p class="short">I love you when you&#x27;re being completely random.</p>
+<p class="short">I love you when you&#x27;re simply being yourself.</p>
+<p>And I don&#x27;t need you to become someone else for me to keep feeling that way.</p>
+<p class="short">I just want to keep knowing you.</p>
+<p class="short">Keep understanding you.</p>
+<p class="short">Keep laughing with you.</p>
+<p class="short">Keep having stupid conversations with you.</p>
+<p class="short">Keep making memories with you.</p>
+<p class="short">Keep listening to you.</p>
+<p class="short">Keep caring about you.</p>
+<p class="short">Keep being someone you can talk to.</p>
+<p>And maybe, somewhere along the way, we&#x27;ll look back at all of this and laugh about how complicated everything felt in the beginning.</p>
+<p class="short">Maybe we&#x27;ll laugh at how nervous we were.</p>
+<p class="short">Maybe we&#x27;ll laugh at all the awkwardness.</p>
+<p class="short">Maybe we&#x27;ll laugh at the &quot;BE CAUTIOUS&quot; jokes.</p>
+<p class="short">Maybe we&#x27;ll laugh at how much we overthought everything.</p>
+<p>Maybe we&#x27;ll laugh at how you kept asking me why I liked you and I kept saying I didn&#x27;t know.</p>
+<p>But even if I never find a more perfect explanation, I think I&#x27;ll be okay with that.</p>
+<p>Because I don&#x27;t think love needs to be perfectly explained to be genuine.</p>
+<p class="short">Sometimes you just meet someone.</p>
+<p class="short">You get to know them.</p>
+  </div>
+</section>
+
+<section class="page" data-page="30">
+  <div class="page-inner">
+    <div class="page-number">30 / 32</div>
+    
+    <p class="short">You laugh with them.</p>
+<p class="short">You listen to them.</p>
+<p class="short">You care about them.</p>
+<p class="short">And somewhere along the way, they become important to you.</p>
+<p class="short">That&#x27;s what happened to me.</p>
+<p class="short">I met you.</p>
+<p class="short">I got to know you.</p>
+<p class="short">And somewhere along the way...</p>
+<p class="short">you became someone I love.</p>
+<p class="short">That&#x27;s it.</p>
+<p class="short">That&#x27;s my answer.</p>
+<p class="short">Maybe it&#x27;s simple.</p>
+<p class="short">Maybe it&#x27;s not enough.</p>
+<p class="short">But it&#x27;s mine.</p>
+<p class="short">And it&#x27;s honest.</p>
+<p class="short">So thank you, Alaia.</p>
+<p class="short">For the letter.</p>
+<p class="short">For trusting me.</p>
+<p class="short">For opening up.</p>
+<p class="short">For laughing with me.</p>
+<p class="short">For letting me care.</p>
+<p class="short">For every random conversation.</p>
+<p class="short">For every stupid joke.</p>
+<p class="short">For every tampo.</p>
+  </div>
+</section>
+
+<section class="page" data-page="31">
+  <div class="page-inner">
+    <div class="page-number">31 / 32</div>
+    
+    <p>For every &quot;idk.&quot;</p>
+<p class="short">For every reassurance.</p>
+<p class="short">For every little moment.</p>
+<p class="short">For being someone I can be myself around.</p>
+<p>And for giving me someone worth writing 4000+ words about because apparently I have lost all sense of brevity.</p>
+<p class="short">HAHAHAHA.</p>
+<p class="short">But seriously.</p>
+<p class="short">Thank you for being you.</p>
+<p class="short">And if you ever wonder whether I regret falling for you...</p>
+<p class="short">No.</p>
+<p class="short">Not even close.</p>
+<p class="short">If anything, I&#x27;m grateful.</p>
+<p>Because out of all the random things that could have happened, somehow I got to know you.</p>
+<p class="short">And somehow, I got to love you.</p>
+<p class="short">And I think that&#x27;s something I&#x27;ll always be thankful for.</p>
+<p class="short">So yeah.</p>
+<p class="short">Hi, hello, hi.</p>
+<p class="short">This is probably way too long.</p>
+<p class="short">You probably already got tired somewhere around the middle.</p>
+<p class="short">But if you somehow made it here...</p>
+<p class="short">I hope you know that every word was meant.</p>
+<p class="short">Every stupid joke.</p>
+<p class="short">Every serious part.</p>
+<p class="short">Every memory.</p>
+  </div>
+</section>
+
+<section class="page" data-page="32">
+  <div class="page-inner">
+    <div class="page-number">32 / 32</div>
+    
+    <p class="short">Every little thing I mentioned.</p>
+<p class="short">All of it.</p>
+<p>And if there&#x27;s one sentence I want you to remember after reading all of this, it&#x27;s probably this:</p>
+<p>I didn&#x27;t choose to love you. I just found myself loving you, and I&#x27;m really glad I did.</p>
+<p>And maybe another one:</p>
+<p>You don&#x27;t have to believe every word immediately. I&#x27;ll let my actions speak for me.</p>
+<p class="short">And okay, fine.</p>
+<p class="short">One last one.</p>
+<p class="short">I love you 4000.</p>
+<p class="short">There.</p>
+<p class="short">Now you can&#x27;t say I didn&#x27;t give you a definite answer.</p>
+<p class="short">HAHAHAHA.</p>
+<p>— dear, charo kent</p>
+<p class="hashtag">#kentbermino #ermino #kennotthepepper #peppernakennot #totoy #frenchgirlissigningout #oanotata #oanomisskita</p>
+  </div>
+</section>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="secondary" id="prev">←</button>
+  <button id="next">next →</button>
+  <span class="count" id="count">cover / 32</span>
+</div>
+<div class="hint">tap • swipe • arrow keys • choose any one of the three tracks</div>
+
+<script>
+(() => {
+ const pages=[...document.querySelectorAll('.page')];
+ const book=document.getElementById('book');
+ const prev=document.getElementById('prev'), next=document.getElementById('next');
+ const count=document.getElementById('count');
+ let current=0;
+ pages.forEach((p,i)=>p.style.zIndex=pages.length-i);
+
+ function render(){
+   pages.forEach((p,i)=>p.classList.toggle('flipped',i<current));
+   pages.forEach((p,i)=>p.style.zIndex=i<current?i+1:pages.length-i);
+   count.textContent=(current===0?'cover':current+' / 32');
+   prev.disabled=current===0; next.disabled=current===pages.length-1;
+ }
+ function go(d){current=Math.max(0,Math.min(pages.length-1,current+d));render();}
+ prev.onclick=()=>go(-1); next.onclick=()=>go(1);
+ book.addEventListener('click',e=>{
+   if(e.target.closest('.controls,.music-panel,button,input,label')) return;
+   const r=book.getBoundingClientRect(), x=e.clientX-r.left;
+   if(x>r.width*.58)go(1); else if(x<r.width*.42)go(-1);
+ });
+ let sx=0;
+ book.addEventListener('touchstart',e=>sx=e.changedTouches[0].clientX,{passive:true});
+ book.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>45)go(dx<0?1:-1)},{passive:true});
+ document.addEventListener('keydown',e=>{
+   if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(1)}
+   if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}
+ });
+
+ // Each track has its own audio element. Choosing one does not switch pages
+ // and selecting another track never automatically changes the selected track.
+ const tracks=[...document.querySelectorAll('.track')];
+ tracks.forEach(card=>{
+   const input=card.querySelector('input[type=file]');
+   const audio=card.querySelector('audio');
+   const play=card.querySelector('.play');
+   input.addEventListener('change',()=>{
+     const file=input.files[0]; if(!file)return;
+     audio.src=URL.createObjectURL(file);
+     play.textContent='▶';
+   });
+   play.addEventListener('click',async()=>{
+     if(!audio.src){
+       alert('Choose the audio file for this track first.');
+       return;
+     }
+     // Keep the three tracks independent; pause the others so two songs
+     // do not play over one another, but never change which track is selected.
+     tracks.forEach(other=>{
+       const a=other.querySelector('audio'), b=other.querySelector('.play');
+       if(a!==audio){a.pause();b.textContent='▶';}
+     });
+     if(audio.paused){await audio.play();play.textContent='❚❚';}
+     else{audio.pause();play.textContent='▶';}
+   });
+   audio.addEventListener('ended',()=>play.textContent='▶');
+ });
+
+ const openingCover=document.getElementById('openingCover');
+ const coverBook=document.getElementById('coverBook');
+ let opened=false;
+ function openCover(){
+   if(opened)return; opened=true;
+   coverBook.classList.add('open');
+   setTimeout(()=>openingCover.classList.add('hidden'),650);
+ }
+ openingCover.addEventListener('click',openCover);
+ document.addEventListener('keydown',e=>{if(e.key==='Enter' || e.key==='Escape')openCover()});
+ render();
+})();
+</script>
+</body>
+</html>

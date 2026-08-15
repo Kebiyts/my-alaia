@@ -1,0 +1,13 @@
+{
+  "name": "Sundayyy Naaa I Love You + + +",
+  "short_name": "For Alaia",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#e9e4d8",
+  "theme_color": "#7e8965",
+  "orientation": "any",
+  "icons": [
+    {"src":"images/alaia-photo.jpg","sizes":"192x192","type":"image/jpeg"},
+    {"src":"images/alaia-photo.jpg","sizes":"512x512","type":"image/jpeg"}
+  ]
+}
